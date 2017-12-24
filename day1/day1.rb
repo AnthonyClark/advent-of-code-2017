@@ -1,15 +1,15 @@
 def main 
   digits = IO.read("day1_input.txt").split("").map{ |i| i.to_i }
 
-  puts "Captcha sum: #{sum_captcha(digits)}"
+  puts "Part 1 Captcha sum: #{sum_captcha(digits, 1)}"
+  puts "Part 2 Captcha sum: #{sum_captcha(digits, digits.size/2)}"
 end
 
-def sum_captcha(digits)
-  sum = 0
-  digits.take(digits.size - 1).each_with_index do |x, index|
-    sum += x if x == digits[index+1]
+def sum_captcha(digits, offset)
+  digits.each_with_index.inject(0) do |sum, (d, index)|
+    next_i = (index + offset) % (digits.length)
+    d == digits[next_i] ? sum + d : sum
   end
-  sum += digits.first if digits.first == digits.last
 end
 
 main
