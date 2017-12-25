@@ -53,30 +53,11 @@ def part_two
           sum += sides[ring-1][side_of_ring][1]
           sides[ring][side_of_ring] << sum
 
-        # last on ring
-        elsif side_of_ring == 3 && position_on_side == numbers_per_side - 1
-          sum += sides[ring][0][0]
-          sum += sides[ring - 1][-1][-1]
-
-          sides[ring][side_of_ring] << sum
-
-        # second last on ring
-        elsif side_of_ring == 3 && position_on_side == numbers_per_side - 2
-          sum += sides[ring][0][0]
-          sum += sides[ring - 1][-1][-1]
-          sum += sides[ring - 1][-1][-2]
-
-          sides[ring][side_of_ring] << sum
-
-        # last on side
-        elsif position_on_side == numbers_per_side - 1
-          sum += sides[ring-1][side_of_ring][-1]
-          sides[ring][side_of_ring] << sum
-
-        # second last on side
-        elsif position_on_side == numbers_per_side -2
-          sum += sides[ring-1][side_of_ring][-1]
-          sum += sides[ring-1][side_of_ring][-2]
+        # last two on side
+        elsif position_on_side >= numbers_per_side - 2
+          sum += sides[ring - 1][side_of_ring][-1]
+          sum += sides[ring - 1][side_of_ring][-2] if position_on_side == numbers_per_side - 2 # only for second last
+          sum += sides[ring][0][0] if side_of_ring == 3 # only for closing the ring
 
           sides[ring][side_of_ring] << sum
 
