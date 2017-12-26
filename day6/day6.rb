@@ -2,8 +2,10 @@ require 'set'
 
 def main
   input = IO.read("day6_input.txt").split("\t").map(&:to_i)
+  mem_bank = MemoryBank.new(input)
 
-  puts "Part 1 count: #{MemoryBank.new(input).rebalance_cycles}"
+  puts "Part 1 count: #{mem_bank.rebalances_until_reptition}"
+  puts "Part 2 count: #{mem_bank.rebalances_per_loop}"
 end
 
 class MemoryBank
@@ -12,13 +14,22 @@ class MemoryBank
     @block_history = Set.new
   end
 
-  def rebalance_cycles
+  def rebalances_until_reptition
     count = 0
     while @block_history.add?(serialize_blocks) do
       count += 1
       rebalance
     end
     count
+  end
+
+  def rebalances_per_loop
+    mem_to_match = serialize_blocks
+    count = 0
+    while count += 1 do
+      rebalance
+      return count if mem_to_match == serialize_blocks
+    end
   end
 
   private
